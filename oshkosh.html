@@ -1,0 +1,48 @@
+<html>
+<head>
+<style>
+* {
+  padding: 5px;  
+}
+body {
+  background-color: lightgray;
+}
+</style>
+</head>
+<body>
+  <div>
+    <img src="oshkosh.png"></img> 
+  </div>
+  <div>
+    <label>Campo A:</label><input id="a" type="text" maxlength="10" size="10"></input>
+    <label>Campo B:</label><input id="b" type="text" maxlength="10" size="10"></input>
+    <label>Campo C:</label><input id="c" type="text" maxlength="10" size="10"></input>
+  </div>
+  <div>
+    <label>Campo D:</label><input id="d" type="text" maxlength="10" size="10"></input>
+    <input id="arch" type="file" hidden></input>
+    <label>Campo E:</label><input id="e" type="text" maxlength="10" size="30"></input>
+  </div>
+  <script>
+    var b=document.getElementById("b");
+    var c=document.getElementById("c");
+    var d=document.getElementById("d");
+    var e=document.getElementById("e");
+    var arch=document.getElementById("arch");
+    function setValorC(){
+      c.value=b.value+"1234";
+    }
+    b.addEventListener("change",() => setValorC());
+    d.addEventListener("change",function(){
+      if (d.value=="xxxxxx") {
+        d.value=""
+        arch.click();
+      }
+    });
+    arch.addEventListener("change", function(ev){
+      e.value=ev.target.files[0].name;
+    });
+  </script>
+</body>
+</html>
+
