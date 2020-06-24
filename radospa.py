@@ -17,7 +17,7 @@ def radospa():
     pyautogui.press('Home')
     while True:
         pyautogui.scroll(-400)
-        time.sleep(0.1)
+        time.sleep(0.2)
         pos=pyautogui.locateOnScreen('almacen40.png')
         if pos!=None: 
             x=pos.left+pos.width/2
@@ -26,7 +26,11 @@ def radospa():
             break
 
     """ Busca Campo B """
-    pos=pyautogui.locateOnScreen('campob.png')
+    time.sleep(0.5)
+    pos=pyautogui.locateOnScreen('campob.png',confidence=0.95)
+    if pos==None:
+        print("Campo B no encontrado, saliendo ...")
+        return
 
     """ Se posiciona en el campo B y selecciona todo """
     x=pos.left+pos.width+20
@@ -42,6 +46,7 @@ def radospa():
     pyautogui.keyDown('ctrl')
     pyautogui.press('c')
     pyautogui.keyUp('ctrl')
+    time.sleep(.2)
     OpenClipboard()
     valorC=GetClipboardData(CF_UNICODETEXT)
     print('El valor de C es %s' % valorC)
