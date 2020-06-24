@@ -3,36 +3,98 @@
 <style>
 * {
   padding: 5px;  
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
 }
 body {
   background-color: lightgray;
 }
+#dlg1 {
+  border-color: gray;
+  border-width: 5px;
+  border-style: solid;
+  padding: 0px;
+  position: absolute;
+  margin-top: 100px;
+  margin-left: 100px;
+  width: 300px;
+}
+#tit-dlg1 {
+  background-color: gray;
+  text-align: center;
+}
+#lista-dlg1 {
+  height: 200px;
+  background-color: white;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  outline-width: 0px;
+}
+option {
+  border: 0.01px;
+  border-style: ridge;
+  margin: 0px;
+  padding: 2px;
+}
+#text {
+  width: 100%;
+  height: 100px;
+}
 </style>
 </head>
 <body>
+  <div id="dlg1">
+    <div id="tit-dlg1">
+      Almacen
+    </div>   
+    <select id="lista-dlg1" multiple>
+    </select>
+    <!-- Llena la lista de opciones -->    
+    <script>
+      var l=document.getElementById("lista-dlg1");
+      for(var i=0;i<100;i++){
+        l.innerHTML+='<option>'+(i+1)+'</option>';
+      }
+    </script>
+  </div>
   <div>
     <img src="oshkosh.png"></img> 
   </div>
-  <div>
-    <label>Campo A:</label><input id="a" type="text" maxlength="10" size="10"></input>
-    <label>Campo B:</label><input id="b" type="text" maxlength="10" size="10"></input>
-    <label>Campo C:</label><input id="c" type="text" maxlength="10" size="10"></input>
-  </div>
-  <div>
-    <label>Campo D:</label><input id="d" type="text" maxlength="10" size="10"></input>
-    <input id="arch" type="file" hidden></input>
-    <label>Campo E:</label><input id="e" type="text" maxlength="10" size="30"></input>
-  </div>
+  <fieldset>
+    <legend>Cabecera</legend>
+    <div>
+      <label>Campo A:</label><input id="a" type="text" maxlength="10" size="10"></input>
+      <label>Campo B:</label><input id="b" type="text" maxlength="10" size="10"></input>
+      <label>Campo C:</label><input id="c" type="text" maxlength="10" size="10"></input>
+    </div>
+    <div>
+      <label>Campo D:</label><input id="d" type="text" maxlength="10" size="10"></input>
+      <input id="arch" type="file" hidden></input>
+      <label>Campo E:</label><input id="e" type="text" maxlength="10" size="30"></input>
+    </div>
+  </fieldset>
+  
+  <fieldset>
+    <legend>Detalle</legend>
+    <div>
+      <textarea id="text"></textarea>
+    </div>
+  </fieldset>
+
   <script>
+    var a=document.getElementById("a");
     var b=document.getElementById("b");
     var c=document.getElementById("c");
     var d=document.getElementById("d");
     var e=document.getElementById("e");
     var arch=document.getElementById("arch");
-    function setValorC(){
-      c.value=b.value+"1234";
-    }
-    b.addEventListener("change",() => setValorC());
+    var lista=document.getElementById("dlg1");
+    var text=document.getElementById("text");
+    
+    b.addEventListener("change",function (){
+      c.value=b.value+eval(Math.floor(Math.random()*1000)+1);
+    });
     d.addEventListener("change",function(){
       if (d.value=="xxxxxx") {
         d.value=""
@@ -41,6 +103,11 @@ body {
     });
     arch.addEventListener("change", function(ev){
       e.value=ev.target.files[0].name;
+      text.value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et luctus sapien. Vivamus et ex tincidunt, tincidunt ex laoreet, sagittis neque. Praesent bibendum commodo mi a vehicula. Aenean vitae tellus quis quam fringilla accumsan sed ut urna. Proin nec sollicitudin urna. Proin at aliquet odio, nec laoreet purus. Nam fringilla sodales elit. Integer ac mi turpis. Nam sollicitudin massa arcu, ac tempus nulla venenatis eu.";
+    });
+    lista.addEventListener("dblclick", function(){
+      a.value=40;
+      lista.style.visibility="hidden";
     });
   </script>
 </body>

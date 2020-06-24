@@ -6,22 +6,36 @@ import win32gui
 import time
 
 def radospa():
-    """ Obtiene la posición de la leyenda "Campo A:" """
-    pos=pyautogui.locateOnScreen('campoa.png')
+    """ Obtiene la posición de la leyenda "Almacen" """
+    pos=pyautogui.locateOnScreen('Almacen.png')
     if pos==None: 
         """ Sale si no la encuentra """
         return
+    x=pos.left+pos.width/2
+    y=pos.top+pos.height+20
+    pyautogui.click(x,y)
+    pyautogui.press('Home')
+    while True:
+        pyautogui.scroll(-400)
+        time.sleep(0.1)
+        pos=pyautogui.locateOnScreen('almacen40.png')
+        if pos!=None: 
+            x=pos.left+pos.width/2
+            y=pos.top+pos.height/2
+            pyautogui.doubleClick(x,y)            
+            break
 
-    """ Se posiciona en el primer campo y selecciona todo """
+    """ Busca Campo B """
+    pos=pyautogui.locateOnScreen('campob.png')
+
+    """ Se posiciona en el campo B y selecciona todo """
     x=pos.left+pos.width+20
     y=pos.top+pos.height/2
     pyautogui.click(x,y)
     pyautogui.keyDown('ctrl')
     pyautogui.press('a')
     pyautogui.keyUp('ctrl')
-    """ Llena valores A y B """
-    pyautogui.write('algo ...')
-    pyautogui.press('\t')
+    """ Llena valor de B """
     pyautogui.write('TI')
     pyautogui.press('\t')
     """ Obtiene el valor calculado en C """
