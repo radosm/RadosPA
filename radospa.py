@@ -4,8 +4,10 @@ import win32con
 import win32api
 import win32gui
 import time
+import sys
+import os
 
-def radospa():
+def radospa(carpeta):
     """ Obtiene la posición de la leyenda "Almacen" """
     pos=pyautogui.locateOnScreen('Almacen.png')
     if pos==None: 
@@ -50,13 +52,51 @@ def radospa():
     OpenClipboard()
     valorC=GetClipboardData(CF_UNICODETEXT)
     print('El valor de C es %s' % valorC)
-    """ Pone xxxxxx en campo D para que abra el dialogo de file"""
+    """ Pone xxxxxx en campo D para que abra el dialogo de file """
     pyautogui.press('\t')
     pyautogui.write('xxxxxx')
     pyautogui.press('\t')
+    t0=time.time()
+    while True:
+        time.sleep(0.2)
+        pos=pyautogui.locateOnScreen('filename.png',confidence=0.95)
+        if pos!=None:
+            break
+        if time.time() - t0 > 10:
+            break
+    if pos==None:
+        print("File name no encontrado, saliendo ...")
+        return
+    x=pos.left+pos.width+20
+    y=pos.top+pos.height/2
+    pyautogui.click(x,y)
+        
+    #pyautogui.press('Esc')    
+    # f=open("ccccc","r")
+    # for l in f:
+    #     s=l.split('-')
+    #     p=int(s[0])
+    #     li=int(s[1])
+    #     break
+    # f.close()
+    for a in os.listdir(carpeta):
+        s=a.split('-')
+        if (carpeta[-1]!='\\'):
+            carpeta=carpeta+'\\'
+        pyautogui.write(carpeta+a)
+        pyautogui.press('Enter')
+        pyautogui.keyDown('shift')
+        pyautogui.press('tab')
+        pyautogui.keyUp('shift')
+        pyautogui.write(s[0])
+        break
+        
+    
 
-def main():
-    radospa()
+def main(argv):
+    if len(argv)!=2:
+        return
+    radospa(argv[1])
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
